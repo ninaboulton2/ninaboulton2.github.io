@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projets de Nina</title>
+<meta name="description" content="Trois applications web personnelles : BikeCheck, Recettes des Boultons et Training Log. Présentation détaillée, code privé.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --text: #1d1b18;
+  --muted: #625d55;
+  --line: #e4dfd5;
+  --chip: #efebe3;
+  --bike: #1f7a5a;
+  --bike-soft: #e3f2ec;
+  --food: #b4532a;
+  --food-soft: #f8e9e1;
+  --run: #4b54b8;
+  --run-soft: #e8e9f8;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15140f; --surface: #1f1d18; --text: #f1ede4; --muted: #a8a196;
+    --line: #34312a; --chip: #2a2822;
+    --bike: #5cc79e; --bike-soft: #1c2f28;
+    --food: #f0956a; --food-soft: #33231b;
+    --run: #9aa2f2; --run-soft: #23253a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15140f; --surface: #1f1d18; --text: #f1ede4; --muted: #a8a196;
+  --line: #34312a; --chip: #2a2822;
+  --bike: #5cc79e; --bike-soft: #1c2f28;
+  --food: #f0956a; --food-soft: #33231b;
+  --run: #9aa2f2; --run-soft: #23253a;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.6 Inter, system-ui, sans-serif;
+}
+a { color: inherit; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+header.hero { padding: 72px 0 40px; }
+.hero h1 {
+  font-family: Fraunces, Georgia, serif; font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.1; margin: 0 0 16px;
+}
+.hero p { color: var(--muted); max-width: 640px; font-size: 1.1rem; margin: 0; }
+nav.toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+nav.toc a {
+  text-decoration: none; padding: 8px 14px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--line); font-weight: 500; font-size: .95rem;
+}
+nav.toc a span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+.note {
+  margin-top: 24px; font-size: .9rem; color: var(--muted);
+  border-left: 3px solid var(--line); padding-left: 12px;
+}
+
+section.project {
+  --accent: var(--bike); --soft: var(--bike-soft);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  margin: 0 0 32px; overflow: hidden;
+}
+section.project.food { --accent: var(--food); --soft: var(--food-soft); }
+section.project.run { --accent: var(--run); --soft: var(--run-soft); }
+.p-head { background: var(--soft); padding: 32px 28px 24px; border-bottom: 1px solid var(--line); }
+.p-kicker { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.p-head h2 { font-family: Fraunces, Georgia, serif; font-size: clamp(1.7rem, 4vw, 2.3rem); margin: 6px 0 10px; line-height: 1.15; }
+.p-head .pitch { font-size: 1.08rem; margin: 0; max-width: 720px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+  padding: 9px 16px; border-radius: 10px; font-weight: 600; font-size: .95rem;
+  background: var(--accent); color: var(--surface);
+}
+.btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); cursor: default; }
+.status { display: inline-block; font-size: .8rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--surface); color: var(--accent); border: 1px solid var(--accent); margin-left: 8px; vertical-align: middle; }
+.p-body { padding: 8px 28px 28px; }
+.p-body h3 { font-size: 1.05rem; margin: 26px 0 8px; }
+.p-body p { margin: 0 0 12px; }
+.p-body ul { margin: 0 0 12px; padding-left: 20px; }
+.p-body li { margin-bottom: 6px; }
+.p-body li strong { font-weight: 600; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+.card { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.card h4 { margin: 0 0 6px; font-size: .98rem; color: var(--accent); }
+.card p { margin: 0; font-size: .94rem; color: var(--muted); }
+.stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.stack span { background: var(--chip); border-radius: 6px; padding: 3px 9px; font-size: .86rem; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 22px; }
+.fact { border-top: 2px solid var(--accent); padding-top: 8px; }
+.fact b { display: block; font-size: 1.25rem; }
+.fact small { color: var(--muted); }
+footer { padding: 24px 0 56px; color: var(--muted); font-size: .9rem; }
+@media (max-width: 560px) {
+  .p-head, .p-body { padding-left: 18px; padding-right: 18px; }
+  header.hero { padding-top: 48px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>Mes projets</h1>
+  <p>Trois applications web que je conçois, développe et fais tourner seule, nées d'un même réflexe&nbsp;: remplacer un tableur ou un carnet qu'on ne met jamais à jour par un outil qui se tient à jour tout seul.</p>
+  <nav class="toc" aria-label="Projets">
+    <a href="#bike-check"><span style="background:var(--bike)"></span>BikeCheck</a>
+    <a href="#recettes"><span style="background:var(--food)"></span>Recettes des Boultons</a>
+    <a href="#training"><span style="background:var(--run)"></span>Training Log</a>
+  </nav>
+  <p class="note">Le code source de ces projets est privé. Cette page décrit ce qu'ils font et comment ils sont construits, sans le divulguer. Accès au code possible sur demande.</p>
+</header>
+
+<!-- ============ BIKECHECK ============ -->
+<section class="project" id="bike-check">
+  <div class="p-head">
+    <div class="p-kicker">Application web · cyclisme · Strava</div>
+    <h2>BikeCheck <span class="status">En ligne</span></h2>
+    <p class="pitch">Suivre l'usure des pièces de son vélo à partir de ses sorties Strava, et être prévenu avant qu'une pièce usée (une chaîne, des plaquettes) n'en abîme une plus chère (une cassette, un disque).</p>
+    <div class="links">
+      <a class="btn" href="https://bike-check.fr" target="_blank" rel="noopener">bike-check.fr ↗</a>
+      <span class="btn ghost">Dépôt GitHub privé</span>
+    </div>
+  </div>
+  <div class="p-body">
+    <h3>Le problème</h3>
+    <p>Une chaîne trop allongée use la cassette et les plateaux&nbsp;; des plaquettes finies attaquent le disque. Tout le monde le sait, personne ne tient son tableur d'entretien à jour. BikeCheck part des sorties déjà enregistrées sur Strava et calcule seul le kilométrage de chaque pièce depuis son montage.</p>
+
+    <h3>Ce que fait l'application</h3>
+    <ul>
+      <li><strong>Connexion avec Strava</strong>, import des vélos du compte, puis synchronisation automatique de chaque sortie (création, modification, suppression) grâce aux webhooks Strava, sans interrogation en boucle.</li>
+      <li><strong>Pièces par vélo</strong>&nbsp;: chaîne, cassette, plateaux, pneus, plaquettes, batterie, suspensions… avec des modèles de vélo prêts à l'emploi (route, gravel, VTT, électrique, home-trainer) et des packs de pièces prédéfinis.</li>
+      <li><strong>Usure pondérée par les conditions</strong>&nbsp;: une sortie sous la pluie, dans la boue, la poussière ou en hiver use plus. Coefficients propres à chaque type de pièce, cas particuliers pour les freins sur jante et les plaquettes frittées, et une matrice dédiée aux sorties sur home-trainer (selon le type de trainer, seules la transmission et les points de contact s'usent).</li>
+      <li><strong>Toujours les vrais kilomètres</strong>, avec les «&nbsp;km d'usure&nbsp;» à côté, jamais seuls. Chaque chiffre est explicable&nbsp;: l'application montre, sortie par sortie, quel coefficient a été appliqué et pourquoi.</li>
+      <li><strong>Alertes</strong> à trois niveaux (attention, critique, dépassé), par notification push, e-mail ou dans l'application, sans renvoyer la même alerte en boucle.</li>
+      <li><strong>Rappels personnalisés</strong>&nbsp;: tous les X jours, km ou heures, ou après une sortie dans certaines conditions («&nbsp;nettoyer la transmission après une sortie boueuse&nbsp;»), avec report et mise en pause.</li>
+      <li><strong>Mesure de chaîne</strong>, suivi des entretiens et des charges de batterie, <strong>coûts et prix des pièces</strong> pour chiffrer ce qu'une pièce négligée peut coûter.</li>
+      <li><strong>Schéma interactif du vélo</strong> (quatre silhouettes) où chaque pièce s'affiche avec son état.</li>
+      <li><strong>Récapitulatif hebdomadaire</strong> par e-mail le lundi, envoyé seulement s'il y a eu des sorties ou quelque chose à surveiller.</li>
+      <li>Visite guidée au premier lancement, guide public expliquant le calcul, interface <strong>français / anglais</strong>, page d'accueil animée au défilement.</li>
+    </ul>
+
+    <h3>Sous le capot</h3>
+    <div class="grid">
+      <div class="card"><h4>Une seule source de vérité</h4><p>Les compteurs ne sont jamais incrémentés à la main&nbsp;: ils sont recalculés à partir des sorties par une fonction pure, testée, et mis en cache de façon idempotente.</p></div>
+      <div class="card"><h4>Robustesse Strava</h4><p>File de reprise pour les événements webhook en échec, vérifications différées (Strava ne prévient pas quand on change le vélo d'une activité), respect des quotas d'API avec mise en pause automatique.</p></div>
+      <div class="card"><h4>Tâches planifiées</h4><p>Contrôle quotidien des alertes, récapitulatif du lundi, revérifications toutes les 30 minutes, sauvegarde chiffrée de la base chaque nuit.</p></div>
+      <div class="card"><h4>Vie privée</h4><p>Lecture seule sur Strava, données visibles uniquement par leur propriétaire, suppression complète à la déconnexion, politique RGPD, bannière de consentement conforme CNIL.</p></div>
+    </div>
+
+    <h3>Technologies</h3>
+    <div class="stack">
+      <span>TypeScript</span><span>Monorepo Turborepo</span><span>Next.js 15</span><span>React 19</span><span>Tailwind CSS 4</span><span>shadcn/ui</span><span>PostgreSQL (Supabase)</span><span>Drizzle ORM</span><span>Zod</span><span>API & webhooks Strava</span><span>React Email + Resend</span><span>Web Push</span><span>Vitest</span><span>Vercel (cron)</span><span>GitHub Actions</span><span>Sentry</span>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b>Mars 2026</b><small>début du projet</small></div>
+      <div class="fact"><b>~30</b><small>routes d'API</small></div>
+      <div class="fact"><b>FR / EN</b><small>interface et e-mails</small></div>
+      <div class="fact"><b>Gratuit</b><small>offre Pro prévue</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RECETTES ============ -->
+<section class="project food" id="recettes">
+  <div class="p-head">
+    <div class="p-kicker">Application web · cuisine · famille</div>
+    <h2>Recettes des Boultons <span class="status">En ligne · accès famille</span></h2>
+    <p class="pitch">Le carnet de recettes de la famille, en ligne&nbsp;: on y range les recettes, on prépare le planning des repas de la semaine, et on fait les courses à partir de ce planning.</p>
+    <div class="links">
+      <a class="btn" href="https://recettes-des-boultons.vercel.app" target="_blank" rel="noopener">recettes-des-boultons.vercel.app ↗</a>
+      <span class="btn ghost">Dépôt GitHub privé</span>
+    </div>
+  </div>
+  <div class="p-body">
+    <h3>Le problème</h3>
+    <p>Les recettes de famille vivent dans des cahiers, des PDF, des photos et des messages. Ce site les réunit en un seul endroit, les rend cherchables, et relie la recette au planning des repas puis à la liste de courses. Commencé à l'été 2025, il est en cours de modernisation complète.</p>
+
+    <h3>Ce que fait l'application</h3>
+    <ul>
+      <li><strong>Recettes en sections</strong> («&nbsp;Pâte&nbsp;», «&nbsp;Garniture&nbsp;»…), chacune avec ses ingrédients et ses étapes, une photo par recette, catégories et tags, favoris.</li>
+      <li><strong>Recherche qui ignore les accents</strong>&nbsp;: «&nbsp;gateau&nbsp;» trouve «&nbsp;Gâteau au yaourt&nbsp;», en français comme en anglais.</li>
+      <li><strong>Portions ajustables</strong>&nbsp;: les quantités se recalculent selon le nombre de personnes, avec des unités harmonisées («&nbsp;CàS&nbsp;», «&nbsp;cuillère à soupe&nbsp;» et «&nbsp;tbsp&nbsp;» sont la même chose).</li>
+      <li><strong>Mode cuisine</strong>&nbsp;: une étape à la fois en plein écran, minuteurs automatiques par étape, et l'écran qui reste allumé (pour les mains pleines de farine).</li>
+      <li><strong>Planning des repas</strong>&nbsp;: déjeuner et dîner sur la semaine, recettes ou repas libres, notes, glisser-déposer, impression.</li>
+      <li><strong>Listes de courses intelligentes</strong>&nbsp;: ajout des ingrédients d'une recette (toutes les sections ou certaines), quantités additionnées quand un article revient, tri par rayon, «&nbsp;mode magasin&nbsp;» avec de grandes cases à cocher, et consultation <strong>hors ligne</strong> au fond du supermarché.</li>
+      <li><strong>Recettes bilingues</strong>&nbsp;: chaque recette existe dans sa langue d'origine et en traduction automatique&nbsp;; le site s'affiche dans la langue choisie.</li>
+      <li><strong>Installable sur téléphone</strong> (PWA), mode sombre, connexion par e-mail ou avec Google.</li>
+    </ul>
+
+    <h3>Le traducteur IA</h3>
+    <p>La fonctionnalité phare pour alimenter le carnet&nbsp;: on donne une recette sous n'importe quelle forme, l'IA la transforme en recette structurée (sections, ingrédients, quantités dans les bonnes unités, étapes, catégorie), en français <em>et</em> en anglais, en un seul appel. On relit l'aperçu avant de l'ajouter.</p>
+    <div class="grid">
+      <div class="card"><h4>Toutes les sources</h4><p>Texte collé, photo d'une page de livre ou de cahier, PDF, document Word, Google Docs, import depuis Google Drive, ou dictée au micro.</p></div>
+      <div class="card"><h4>Détection des doublons</h4><p>Avant l'ajout, le site signale les recettes qui semblent déjà exister, pour éviter les doublons.</p></div>
+      <div class="card"><h4>Fournisseur interchangeable</h4><p>OpenAI par défaut, Anthropic, Google ou Mistral par simple configuration. Quota quotidien par personne et suivi du coût de chaque appel.</p></div>
+      <div class="card"><h4>Testable sans IA</h4><p>Un faux fournisseur déterministe permet de tester tout le parcours sans appel réseau ni coût.</p></div>
+    </div>
+
+    <h3>En cours&nbsp;: la version 2</h3>
+    <p>Le site passe d'un carnet familial unique à une base multi-comptes&nbsp;: chacun son carnet, des <strong>groupes</strong> pour partager, des droits fins par recette (lire, copier, modifier) et une <strong>édition générique</strong> en plus de l'identité d'origine. La sécurité repose sur des politiques d'accès au niveau de la base de données (Row Level Security), préparées et testées migration par migration avant toute mise en production.</p>
+
+    <h3>Technologies</h3>
+    <div class="stack">
+      <span>TypeScript strict</span><span>Nuxt 4</span><span>Vue 3</span><span>Nuxt UI</span><span>Tailwind CSS 4</span><span>Pinia</span><span>i18n</span><span>Supabase (PostgreSQL 17, Auth, Storage)</span><span>Row Level Security</span><span>Zod</span><span>Vercel AI SDK</span><span>PWA / Workbox</span><span>Vitest</span><span>Playwright</span><span>GitHub Actions</span><span>Sentry</span><span>Vercel</span>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b>Juin 2025</b><small>début du projet</small></div>
+      <div class="fact"><b>~180</b><small>recettes de famille</small></div>
+      <div class="fact"><b>200+</b><small>commits</small></div>
+      <div class="fact"><b>Tests</b><small>unitaires, intégration, e2e, SQL</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRAINING LOG ============ -->
+<section class="project run" id="training">
+  <div class="p-head">
+    <div class="p-kicker">Application web · course à pied & vélo · Strava</div>
+    <h2>Training Log <span class="status">En développement</span></h2>
+    <p class="pitch">Mon tableau de bord personnel d'entraînement course à pied et vélo, synchronisé avec Strava. Il remplace deux tableurs remplis à la main.</p>
+    <div class="links">
+      <span class="btn ghost">Pas encore en ligne</span>
+      <span class="btn ghost">Dépôt GitHub privé</span>
+    </div>
+  </div>
+  <div class="p-body">
+    <h3>Le problème</h3>
+    <p>Je tenais un tableur pour la course et un autre pour le vélo&nbsp;: kilomètres, types de séance, défis, notes. Strava a toutes les données mais pas la vue par objectif ni le journal annoté que je voulais. Training Log combine les deux&nbsp;: les données de Strava, et ma couche à moi par-dessus. Outil personnel d'abord, il a vocation à devenir une vraie application d'entraînement, indépendante de BikeCheck.</p>
+
+    <h3>Ce que fait l'application</h3>
+    <ul>
+      <li><strong>Objectifs par sport</strong>&nbsp;: kilomètres de la saison, barre de progression avec un repère «&nbsp;rythme régulier&nbsp;», avance ou retard, km par semaine encore nécessaires, courbe cumulée, temps, dénivelé, allure moyenne (course) ou vitesse (vélo). Objectifs modifiables, par année.</li>
+      <li><strong>Mois par mois</strong>&nbsp;: course et vélo côte à côte, au choix en temps, distance, dénivelé, effort relatif ou nombre de séances&nbsp;; le survol détaille la répartition par type de séance, le clic saute au mois dans le journal.</li>
+      <li><strong>Semaine par semaine</strong>&nbsp;: heures hebdomadaires des deux sports et corrélation entre les deux (courir plus fait-il rouler moins&nbsp;?).</li>
+      <li><strong>Journal éditable</strong> façon tableur&nbsp;: onglets course / vélo / tout, groupé par mois et par semaine avec totaux. Chaque cellule se modifie&nbsp;; une valeur modifiée remplace celle de Strava (et le signale), effacer la cellule rétablit Strava. Ajout de séances à la main, masquage, recherche.</li>
+      <li><strong>Colonnes personnalisables</strong>&nbsp;: afficher, renommer, réordonner, ajouter des colonnes (texte, nombre, liste de choix) pour la course, le vélo ou les deux.</li>
+      <li><strong>Types de séance colorés</strong> (footing, tempo, fractionné, sortie longue, côtes, trail, course&nbsp;; route, gravel, VTT, home-trainer…), devinés à partir de Strava puis confirmés à la main.</li>
+      <li>Thème clair et sombre, mise en page téléphone, icône d'écran d'accueil, accès protégé.</li>
+    </ul>
+
+    <h3>Sous le capot</h3>
+    <p>Volontairement minimaliste&nbsp;: une seule page en JavaScript sans framework avec Chart.js, et une fonction serveur Python sur Vercel qui gère la connexion Strava (OAuth), la synchronisation d'une saison entière en quelques requêtes, et l'enregistrement des modifications dans PostgreSQL. Session signée, verrouillage après plusieurs mots de passe erronés, en-têtes de sécurité.</p>
+
+    <h3>Technologies</h3>
+    <div class="stack">
+      <span>HTML / CSS / JavaScript</span><span>Chart.js</span><span>Python</span><span>Fonctions serverless Vercel</span><span>PostgreSQL</span><span>API Strava (OAuth)</span><span>PWA</span>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b>Octobre 2026</b><small>début du projet</small></div>
+      <div class="fact"><b>2</b><small>tableurs remplacés</small></div>
+      <div class="fact"><b>0</b><small>framework front</small></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Page maintenue à la main · <a href="https://github.com/ninaboulton2">github.com/ninaboulton2</a>
+</footer>
+
+</div>
+</body>
+</html>
