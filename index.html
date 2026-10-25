@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Projets de Nina</title>
-<meta name="description" content="Trois applications web personnelles : BikeCheck, Recettes des Boultons et Training Log. Présentation détaillée, code privé.">
+<meta name="description" content="BikeCheck, Recettes des Boultons et Training Log : présentation fonctionnelle et fiche technique détaillée de trois applications web. Code privé.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #f7f5f0;
@@ -16,6 +16,7 @@
   --muted: #625d55;
   --line: #e4dfd5;
   --chip: #efebe3;
+  --code-bg: #f3f0e9;
   --bike: #1f7a5a;
   --bike-soft: #e3f2ec;
   --food: #b4532a;
@@ -27,7 +28,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #15140f; --surface: #1f1d18; --text: #f1ede4; --muted: #a8a196;
-    --line: #34312a; --chip: #2a2822;
+    --line: #34312a; --chip: #2a2822; --code-bg: #26241e;
     --bike: #5cc79e; --bike-soft: #1c2f28;
     --food: #f0956a; --food-soft: #33231b;
     --run: #9aa2f2; --run-soft: #23253a;
@@ -35,7 +36,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #15140f; --surface: #1f1d18; --text: #f1ede4; --muted: #a8a196;
-  --line: #34312a; --chip: #2a2822;
+  --line: #34312a; --chip: #2a2822; --code-bg: #26241e;
   --bike: #5cc79e; --bike-soft: #1c2f28;
   --food: #f0956a; --food-soft: #33231b;
   --run: #9aa2f2; --run-soft: #23253a;
@@ -47,14 +48,17 @@ body {
   font: 16px/1.6 Inter, system-ui, sans-serif;
 }
 a { color: inherit; }
+code, pre { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .86em; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre { background: var(--code-bg); padding: 14px 16px; border-radius: 10px; overflow-x: auto; line-height: 1.5; margin: 0 0 14px; }
+pre code { background: none; padding: 0; }
 .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
-header.hero { padding: 72px 0 40px; }
+header.hero { padding: 64px 0 36px; }
 .hero h1 {
   font-family: Fraunces, Georgia, serif; font-weight: 700;
-  font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.1; margin: 0 0 16px;
+  font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.1; margin: 0;
 }
-.hero p { color: var(--muted); max-width: 640px; font-size: 1.1rem; margin: 0; }
-nav.toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+nav.toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 nav.toc a {
   text-decoration: none; padding: 8px 14px; border-radius: 999px;
   background: var(--surface); border: 1px solid var(--line); font-weight: 500; font-size: .95rem;
@@ -85,15 +89,30 @@ section.project.run { --accent: var(--run); --soft: var(--run-soft); }
 .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); cursor: default; }
 .status { display: inline-block; font-size: .8rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--surface); color: var(--accent); border: 1px solid var(--accent); margin-left: 8px; vertical-align: middle; }
 .p-body { padding: 8px 28px 28px; }
-.p-body h3 { font-size: 1.05rem; margin: 26px 0 8px; }
+.p-body h3 { font-size: 1.15rem; margin: 30px 0 10px; }
+.p-body h4 { font-size: 1rem; margin: 22px 0 8px; color: var(--accent); }
 .p-body p { margin: 0 0 12px; }
 .p-body ul { margin: 0 0 12px; padding-left: 20px; }
 .p-body li { margin-bottom: 6px; }
 .p-body li strong { font-weight: 600; }
+.sub-nav { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 0; }
+.sub-nav a { font-size: .84rem; text-decoration: none; padding: 4px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+.tech-title {
+  margin: 36px -28px 0; padding: 14px 28px; background: var(--soft);
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  font-family: Fraunces, Georgia, serif; font-size: 1.35rem; font-weight: 700;
+}
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
 .card { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
 .card h4 { margin: 0 0 6px; font-size: .98rem; color: var(--accent); }
 .card p { margin: 0; font-size: .94rem; color: var(--muted); }
+.tbl { overflow-x: auto; margin: 0 0 14px; border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; vertical-align: top; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+th { background: var(--chip); font-weight: 600; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+td:first-child { white-space: nowrap; }
+td.wrap-ok { white-space: normal; }
 .stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
 .stack span { background: var(--chip); border-radius: 6px; padding: 3px 9px; font-size: .86rem; }
 .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 22px; }
@@ -103,7 +122,8 @@ section.project.run { --accent: var(--run); --soft: var(--run-soft); }
 footer { padding: 24px 0 56px; color: var(--muted); font-size: .9rem; }
 @media (max-width: 560px) {
   .p-head, .p-body { padding-left: 18px; padding-right: 18px; }
-  header.hero { padding-top: 48px; }
+  .tech-title { margin-left: -18px; margin-right: -18px; padding-left: 18px; padding-right: 18px; }
+  header.hero { padding-top: 44px; }
 }
 </style>
 </head>
@@ -112,7 +132,6 @@ footer { padding: 24px 0 56px; color: var(--muted); font-size: .9rem; }
 
 <header class="hero">
   <h1>Mes projets</h1>
-  <p>Trois applications web que je conçois, développe et fais tourner seule, nées d'un même réflexe&nbsp;: remplacer un tableur ou un carnet qu'on ne met jamais à jour par un outil qui se tient à jour tout seul.</p>
   <nav class="toc" aria-label="Projets">
     <a href="#bike-check"><span style="background:var(--bike)"></span>BikeCheck</a>
     <a href="#recettes"><span style="background:var(--food)"></span>Recettes des Boultons</a>
@@ -121,7 +140,9 @@ footer { padding: 24px 0 56px; color: var(--muted); font-size: .9rem; }
   <p class="note">Le code source de ces projets est privé. Cette page décrit ce qu'ils font et comment ils sont construits, sans le divulguer. Accès au code possible sur demande.</p>
 </header>
 
-<!-- ============ BIKECHECK ============ -->
+<!-- ======================================================= -->
+<!-- BIKECHECK                                                -->
+<!-- ======================================================= -->
 <section class="project" id="bike-check">
   <div class="p-head">
     <div class="p-kicker">Application web · cyclisme · Strava</div>
@@ -131,48 +152,151 @@ footer { padding: 24px 0 56px; color: var(--muted); font-size: .9rem; }
       <a class="btn" href="https://bike-check.fr" target="_blank" rel="noopener">bike-check.fr ↗</a>
       <span class="btn ghost">Dépôt GitHub privé</span>
     </div>
+    <nav class="sub-nav" aria-label="BikeCheck">
+      <a href="#bc-stack">Stack</a><a href="#bc-archi">Architecture</a><a href="#bc-wear">Calcul de l'usure</a><a href="#bc-strava">Strava</a><a href="#bc-notif">Alertes et tâches planifiées</a><a href="#bc-api">API</a><a href="#bc-db">Base de données</a><a href="#bc-qa">Qualité</a>
+    </nav>
   </div>
   <div class="p-body">
     <h3>Le problème</h3>
     <p>Une chaîne trop allongée use la cassette et les plateaux&nbsp;; des plaquettes finies attaquent le disque. Tout le monde le sait, personne ne tient son tableur d'entretien à jour. BikeCheck part des sorties déjà enregistrées sur Strava et calcule seul le kilométrage de chaque pièce depuis son montage.</p>
 
-    <h3>Ce que fait l'application</h3>
+    <h3>Fonctionnalités</h3>
     <ul>
-      <li><strong>Connexion avec Strava</strong>, import des vélos du compte, puis synchronisation automatique de chaque sortie (création, modification, suppression) grâce aux webhooks Strava, sans interrogation en boucle.</li>
-      <li><strong>Pièces par vélo</strong>&nbsp;: chaîne, cassette, plateaux, pneus, plaquettes, batterie, suspensions… avec des modèles de vélo prêts à l'emploi (route, gravel, VTT, électrique, home-trainer) et des packs de pièces prédéfinis.</li>
-      <li><strong>Usure pondérée par les conditions</strong>&nbsp;: une sortie sous la pluie, dans la boue, la poussière ou en hiver use plus. Coefficients propres à chaque type de pièce, cas particuliers pour les freins sur jante et les plaquettes frittées, et une matrice dédiée aux sorties sur home-trainer (selon le type de trainer, seules la transmission et les points de contact s'usent).</li>
-      <li><strong>Toujours les vrais kilomètres</strong>, avec les «&nbsp;km d'usure&nbsp;» à côté, jamais seuls. Chaque chiffre est explicable&nbsp;: l'application montre, sortie par sortie, quel coefficient a été appliqué et pourquoi.</li>
-      <li><strong>Alertes</strong> à trois niveaux (attention, critique, dépassé), par notification push, e-mail ou dans l'application, sans renvoyer la même alerte en boucle.</li>
-      <li><strong>Rappels personnalisés</strong>&nbsp;: tous les X jours, km ou heures, ou après une sortie dans certaines conditions («&nbsp;nettoyer la transmission après une sortie boueuse&nbsp;»), avec report et mise en pause.</li>
-      <li><strong>Mesure de chaîne</strong>, suivi des entretiens et des charges de batterie, <strong>coûts et prix des pièces</strong> pour chiffrer ce qu'une pièce négligée peut coûter.</li>
-      <li><strong>Schéma interactif du vélo</strong> (quatre silhouettes) où chaque pièce s'affiche avec son état.</li>
-      <li><strong>Récapitulatif hebdomadaire</strong> par e-mail le lundi, envoyé seulement s'il y a eu des sorties ou quelque chose à surveiller.</li>
-      <li>Visite guidée au premier lancement, guide public expliquant le calcul, interface <strong>français / anglais</strong>, page d'accueil animée au défilement.</li>
+      <li><strong>Connexion avec Strava</strong>, import des vélos du compte, puis synchronisation automatique de chaque sortie par webhooks.</li>
+      <li><strong>Pièces par vélo</strong>&nbsp;: chaîne, cassette, plateaux, pneus, plaquettes, batterie, suspensions… Modèles de vélo (route, gravel, VTT, électrique, home-trainer), packs de pièces prédéfinis, profil du vélo (assistance électrique, suspensions, montage des pneus, tige de selle télescopique).</li>
+      <li><strong>Usure pondérée par les conditions</strong> (pluie, boue, poussière, hiver) et par le type de home-trainer.</li>
+      <li><strong>Vrais kilomètres et km d'usure côte à côte</strong>, avec le détail sortie par sortie de chaque calcul.</li>
+      <li><strong>Alertes</strong> attention / critique / dépassé, par push, e-mail ou dans l'application.</li>
+      <li><strong>Rappels</strong> par intervalle (jours, km, heures) ou après des sorties dans certaines conditions, avec report et pause.</li>
+      <li><strong>Mesures de chaîne</strong>, suivi des entretiens et des charges de batterie, <strong>prix et coûts des pièces</strong>.</li>
+      <li><strong>Schéma interactif du vélo</strong> (4 silhouettes) avec l'état de chaque pièce.</li>
+      <li><strong>Récapitulatif hebdomadaire</strong> par e-mail le lundi.</li>
+      <li>Visite guidée au premier lancement, guide public du calcul, page d'accueil animée au défilement, interface <strong>français / anglais</strong>, mesure d'audience derrière une bannière de consentement conforme CNIL.</li>
     </ul>
 
-    <h3>Sous le capot</h3>
+    <div class="tech-title">Fiche technique</div>
+
+    <h3 id="bc-stack">Stack</h3>
+    <div class="tbl"><table>
+      <tr><th>Couche</th><th>Choix</th></tr>
+      <tr><td>Monorepo</td><td class="wrap-ok">Turborepo, npm workspaces, TypeScript partout</td></tr>
+      <tr><td>Web</td><td class="wrap-ok">Next.js 15 App Router (Turbopack), React 19</td></tr>
+      <tr><td>UI</td><td class="wrap-ok">Tailwind CSS 4, shadcn/ui v4 sur base-ui</td></tr>
+      <tr><td>Base de données</td><td class="wrap-ok">PostgreSQL (Supabase, région UE), Drizzle ORM</td></tr>
+      <tr><td>Authentification</td><td class="wrap-ok">OAuth Strava, session JWT dans un cookie httpOnly (<code>jose</code>)</td></tr>
+      <tr><td>Validation</td><td class="wrap-ok">Zod, schémas partagés entre client et serveur</td></tr>
+      <tr><td>E-mails</td><td class="wrap-ok">Modèles React Email, envoi par Resend</td></tr>
+      <tr><td>Notifications</td><td class="wrap-ok">Web Push</td></tr>
+      <tr><td>i18n</td><td class="wrap-ok">Hook maison, dictionnaires FR / EN</td></tr>
+      <tr><td>Tests</td><td class="wrap-ok">Vitest sur la logique métier</td></tr>
+      <tr><td>Hébergement</td><td class="wrap-ok">Vercel (fonctions en Europe, à côté de la base), crons Vercel et GitHub Actions</td></tr>
+      <tr><td>Observabilité</td><td class="wrap-ok">Sentry (données personnelles filtrées)</td></tr>
+    </table></div>
+
+    <h3 id="bc-archi">Architecture</h3>
+<pre><code>apps/web/                 application Next.js
+  (marketing)/            accueil, guide public, contact, mentions légales, confidentialité
+  (app)/                  pages connectées : tableau de bord, vélos, pièces, sorties,
+                          entretien, rappels, réglages, onboarding, « comment ça marche »
+  api/                    route handlers (voir API)
+  lib/server/             logique serveur : usure, synchro Strava, alertes, rappels, e-mails
+packages/core/            logique pure : moteur d'usure, rappels, impact économique,
+                          client Strava, limites de débit, mesures de chaîne, coûts
+packages/db/              schéma Drizzle, migrations SQL, scripts de maintenance
+packages/shared/          enums, schémas Zod, constantes, préréglages, i18n (en, fr)
+packages/email/           modèles React Email et envoi Resend</code></pre>
+    <p>Toute la logique métier sensible (usure, rappels, coûts, quotas Strava) vit dans <code>packages/core</code> sous forme de fonctions pures, testées indépendamment de Next.js. Toutes les constantes (coefficients, matrice home-trainer, seuils d'alerte, modèles de vélos) sont centralisées dans <code>packages/shared</code>. Chaque requête sur des données utilisateur est restreinte à l'utilisateur de la session, y compris pour les identifiants reçus dans le corps des requêtes.</p>
+
+    <h3 id="bc-wear">Calcul de l'usure</h3>
+    <p>Les sorties (<code>ride_logs</code>) sont l'<strong>unique source de vérité</strong>&nbsp;: les kilomètres et heures d'une pièce sont toujours <em>dérivés</em> des sorties, jamais incrémentés par une route.</p>
     <div class="grid">
-      <div class="card"><h4>Une seule source de vérité</h4><p>Les compteurs ne sont jamais incrémentés à la main&nbsp;: ils sont recalculés à partir des sorties par une fonction pure, testée, et mis en cache de façon idempotente.</p></div>
-      <div class="card"><h4>Robustesse Strava</h4><p>File de reprise pour les événements webhook en échec, vérifications différées (Strava ne prévient pas quand on change le vélo d'une activité), respect des quotas d'API avec mise en pause automatique.</p></div>
-      <div class="card"><h4>Tâches planifiées</h4><p>Contrôle quotidien des alertes, récapitulatif du lundi, revérifications toutes les 30 minutes, sauvegarde chiffrée de la base chaque nuit.</p></div>
-      <div class="card"><h4>Vie privée</h4><p>Lecture seule sur Strava, données visibles uniquement par leur propriétaire, suppression complète à la déconnexion, politique RGPD, bannière de consentement conforme CNIL.</p></div>
+      <div class="card"><h4>Moteur</h4><p>Une fonction pure compte les sorties datées depuis le montage de la pièce, ajoute la distance déjà parcourue au montage, et renvoie km réels, km d'usure, heures et une ligne par sortie (coefficient et règle appliqués).</p></div>
+      <div class="card"><h4>Cache idempotent</h4><p>Un seul écrivain des colonnes en cache&nbsp;: il verrouille la ligne du vélo, recalcule toutes ses pièces actives, et peut être rejoué sans effet de bord. Les routes l'appellent au lieu de toucher aux compteurs.</p></div>
+      <div class="card"><h4>Coefficients</h4><p>Sec ou inconnu&nbsp;: ×1. Pluie, boue, poussière, hiver&nbsp;: valeur propre à chaque type de pièce. Règles dédiées pour les freins sur jante et les plaquettes frittées sous la pluie.</p></div>
+      <div class="card"><h4>Home-trainer</h4><p>Matrice par type de trainer, figé sur la sortie au moment de l'import. Sans trainer configuré, seules la transmission et les points de contact s'usent. Coefficient intérieur propre aux pièces d'un vélo de home-trainer.</p></div>
+      <div class="card"><h4>Entretien et batterie</h4><p>Les compteurs d'entretien repartent de la dernière intervention, les heures de batterie de la dernière charge (heures réelles, non pondérées).</p></div>
+      <div class="card"><h4>Base des alertes</h4><p>L'interface montre toujours les km réels, avec les km d'usure à côté. Pourcentages et alertes utilisent les km d'usure par défaut, un réglage permet de passer aux km réels.</p></div>
     </div>
+    <p style="margin-top:12px">Chaque chiffre est <strong>explicable</strong>&nbsp;: un endpoint dédié renvoie, pour une pièce, la liste des sorties et des règles qui ont produit son kilométrage.</p>
+
+    <h3 id="bc-strava">Intégration Strava</h3>
+    <ul>
+      <li><strong>OAuth</strong> avec les portées <code>read</code>, <code>activity:read_all</code> et <code>profile:read_all</code>&nbsp;; une connexion sans les portées nécessaires est refusée.</li>
+      <li><strong>Synchronisation</strong> à la demande, ignorée si la dernière date de moins de 6 heures (sauf forçage)&nbsp;; deux synchros simultanées d'un même utilisateur partagent la même exécution&nbsp;; les vélos concernés sont recalculés.</li>
+      <li><strong>Webhook</strong>&nbsp;: accusé de réception immédiat, traitement après la réponse. Création / modification&nbsp;: la sortie est relue et enregistrée (supprimée si elle n'est plus du vélo). Suppression&nbsp;: effective seulement une fois confirmée par Strava. Révocation&nbsp;: jetons effacés seulement quand Strava rejette le jeton. Les événements d'un autre abonnement sont refusés.</li>
+      <li><strong>File de reprise</strong> pour les événements en échec, et <strong>revérifications</strong> à ~15 min et ~24 h de chaque nouvelle sortie, parce que Strava n'envoie aucun webhook quand on change seulement le vélo d'une activité.</li>
+      <li><strong>Quotas</strong>&nbsp;: suivi des limites de 15 minutes et journalières&nbsp;; au-delà de 75 % du quota, les traitements sont reportés, pas perdus.</li>
+      <li><strong>Déconnexion</strong> avec période de grâce&nbsp;: les données Strava sont purgées si l'utilisateur ne se reconnecte pas.</li>
+      <li>Conformité à l'API Agreement et aux Brand Guidelines de Strava (bouton officiel, «&nbsp;Powered by Strava&nbsp;», lien «&nbsp;Voir sur Strava&nbsp;» sur chaque sortie, lecture seule, aucune donnée partagée entre utilisateurs).</li>
+    </ul>
+
+    <h3 id="bc-notif">Alertes, e-mails et tâches planifiées</h3>
+    <ul>
+      <li><strong>Alertes d'usure</strong> aux niveaux attention, critique et dépassé, dans la langue de l'utilisateur et selon ses réglages&nbsp;; la même pièce au même niveau n'est pas renvoyée avant 7 jours, sauf aggravation.</li>
+      <li><strong>Rappels</strong> notifiés une fois par période&nbsp;: push si l'utilisateur a un appareil inscrit, sinon un e-mail groupé, sinon dans l'application seulement. Clés d'idempotence sur les envois.</li>
+      <li><strong>Récapitulatif du lundi</strong>&nbsp;: km et sorties par vélo, pièces à surveiller, entretiens et rappels dus&nbsp;; envoyé seulement s'il y a eu des sorties ou quelque chose à signaler, jamais deux fois en 6 jours (réservation par UPDATE conditionnel, restaurée si l'envoi échoue).</li>
+      <li><strong>Formulaire de contact</strong> stocké en base, limité en débit par IP hachée et par utilisateur.</li>
+    </ul>
+    <div class="tbl"><table>
+      <tr><th>Tâche</th><th>Fréquence</th><th>Rôle</th></tr>
+      <tr><td>Contrôle quotidien</td><td>chaque jour, 06:00 UTC</td><td class="wrap-ok">vérifie tous les vélos actifs, relit les 7 derniers jours Strava des cyclistes actifs, envoie les alertes</td></tr>
+      <tr><td>Récapitulatif</td><td>lundi, 06:30 UTC</td><td class="wrap-ok">e-mails hebdomadaires</td></tr>
+      <tr><td>Revérifications Strava</td><td>toutes les 30 min</td><td class="wrap-ok">traite les revérifications arrivées à échéance (GitHub Actions, budget ~45 s)</td></tr>
+      <tr><td>Sauvegarde</td><td>chaque nuit</td><td class="wrap-ok"><code>pg_dump</code> chiffré, procédure de restauration testée</td></tr>
+    </table></div>
+    <p>Toutes les routes de tâches planifiées sont protégées par un secret partagé.</p>
+
+    <h3 id="bc-api">API</h3>
+    <p>Une trentaine de route handlers. Toutes, sauf l'authentification, le contact, les crons et les webhooks, exigent une session et sont restreintes à l'utilisateur.</p>
+    <div class="tbl"><table>
+      <tr><th>Domaine</th><th>Routes</th></tr>
+      <tr><td>Authentification</td><td class="wrap-ok">redirection et callback OAuth Strava, utilisateur courant, suppression de compte, déconnexion</td></tr>
+      <tr><td>Vélos</td><td class="wrap-ok">liste, création, import depuis Strava, lecture, modification, suppression douce, recalcul</td></tr>
+      <tr><td>Pièces</td><td class="wrap-ok">CRUD, détail sortie par sortie, remplacement, entretien fait, batterie chargée</td></tr>
+      <tr><td>Sorties</td><td class="wrap-ok">liste, ajout manuel, modification (conditions), suppression</td></tr>
+      <tr><td>Entretien et rappels</td><td class="wrap-ok">historique d'entretien, rappels (création, report, pause, fait)</td></tr>
+      <tr><td>Divers</td><td class="wrap-ok">tableau de bord agrégé, réglages, synchro et statut, contact</td></tr>
+      <tr><td>Système</td><td class="wrap-ok">crons (contrôle quotidien, récap, revérifications), webhook Strava</td></tr>
+    </table></div>
+
+    <h3 id="bc-db">Base de données</h3>
+    <p>Schéma Drizzle, migrations SQL écrites à la main et appliquées une à une après relecture (le README tient le registre de ce qui est en production). Principales tables&nbsp;: utilisateurs, vélos, pièces (avec le cache d'usure), sorties, événements d'entretien, mesures de pièces, rappels, abonnements push, messages de contact, file des événements Strava en attente. Les tables sont masquées des API publiques de Supabase&nbsp;: seul le serveur y accède.</p>
+    <div class="tbl"><table>
+      <tr><th>Étape</th><th>Contenu</th></tr>
+      <tr><td>Refonte de l'usure</td><td class="wrap-ok">passage de compteurs incrémentés à un calcul dérivé des sorties, avec migration des données existantes</td></tr>
+      <tr><td>Rappels et contact</td><td class="wrap-ok">tables des rappels et des messages, e-mail de bienvenue</td></tr>
+      <tr><td>Notifications</td><td class="wrap-ok">abonnements push, dédoublonnage des alertes par canal</td></tr>
+      <tr><td>Sécurité</td><td class="wrap-ok">retrait des tables des API publiques</td></tr>
+      <tr><td>Robustesse Strava</td><td class="wrap-ok">file de reprise des webhooks, import initial différé</td></tr>
+      <tr><td>v1.1</td><td class="wrap-ok">profils de vélo, type de sport des sorties, mesures de chaîne, récap hebdo, visite guidée</td></tr>
+    </table></div>
+
+    <h3 id="bc-qa">Qualité et méthode</h3>
+    <ul>
+      <li>Tests unitaires Vitest sur le moteur d'usure, les rappels, les coûts, les quotas et la reprise Strava&nbsp;; typecheck strict de l'application et des paquets&nbsp;; lint.</li>
+      <li>Toute chaîne visible passe par l'i18n, avec parité des clés FR / EN.</li>
+      <li>Aucune migration ni écriture SQL en production sans validation explicite (pas de base de préproduction).</li>
+      <li>Développement assisté par IA avec une organisation en agents spécialisés (recherche, back-end, front-end, tests, relecture), coordonnés par un agent principal qui spécifie, intègre et vérifie.</li>
+      <li><strong>Prochaines étapes</strong>&nbsp;: offre Pro (abonnement via Stripe), tests d'API et de bout en bout.</li>
+    </ul>
 
     <h3>Technologies</h3>
     <div class="stack">
-      <span>TypeScript</span><span>Monorepo Turborepo</span><span>Next.js 15</span><span>React 19</span><span>Tailwind CSS 4</span><span>shadcn/ui</span><span>PostgreSQL (Supabase)</span><span>Drizzle ORM</span><span>Zod</span><span>API & webhooks Strava</span><span>React Email + Resend</span><span>Web Push</span><span>Vitest</span><span>Vercel (cron)</span><span>GitHub Actions</span><span>Sentry</span>
+      <span>TypeScript</span><span>Turborepo</span><span>Next.js 15</span><span>React 19</span><span>Tailwind CSS 4</span><span>shadcn/ui</span><span>PostgreSQL</span><span>Supabase</span><span>Drizzle ORM</span><span>Zod</span><span>API & webhooks Strava</span><span>React Email</span><span>Resend</span><span>Web Push</span><span>Vitest</span><span>Vercel</span><span>GitHub Actions</span><span>Sentry</span>
     </div>
 
     <div class="facts">
       <div class="fact"><b>Mars 2026</b><small>début du projet</small></div>
       <div class="fact"><b>~30</b><small>routes d'API</small></div>
+      <div class="fact"><b>120+</b><small>commits</small></div>
       <div class="fact"><b>FR / EN</b><small>interface et e-mails</small></div>
-      <div class="fact"><b>Gratuit</b><small>offre Pro prévue</small></div>
     </div>
   </div>
 </section>
 
-<!-- ============ RECETTES ============ -->
+<!-- ======================================================= -->
+<!-- RECETTES DES BOULTONS                                    -->
+<!-- ======================================================= -->
 <section class="project food" id="recettes">
   <div class="p-head">
     <div class="p-kicker">Application web · cuisine · famille</div>
@@ -182,50 +306,186 @@ footer { padding: 24px 0 56px; color: var(--muted); font-size: .9rem; }
       <a class="btn" href="https://recettes-des-boultons.vercel.app" target="_blank" rel="noopener">recettes-des-boultons.vercel.app ↗</a>
       <span class="btn ghost">Dépôt GitHub privé</span>
     </div>
+    <nav class="sub-nav" aria-label="Recettes des Boultons">
+      <a href="#rb-stack">Stack</a><a href="#rb-archi">Architecture</a><a href="#rb-data">Modèle de données</a><a href="#rb-sec">Sécurité</a><a href="#rb-api">API</a><a href="#rb-ai">Traducteur IA</a><a href="#rb-i18n">Recettes bilingues</a><a href="#rb-pwa">PWA</a><a href="#rb-editions">Éditions</a><a href="#rb-tests">Tests et CI</a><a href="#rb-v2">v2</a>
+    </nav>
   </div>
   <div class="p-body">
     <h3>Le problème</h3>
     <p>Les recettes de famille vivent dans des cahiers, des PDF, des photos et des messages. Ce site les réunit en un seul endroit, les rend cherchables, et relie la recette au planning des repas puis à la liste de courses. Commencé à l'été 2025, il est en cours de modernisation complète.</p>
 
-    <h3>Ce que fait l'application</h3>
+    <h3>Fonctionnalités</h3>
     <ul>
-      <li><strong>Recettes en sections</strong> («&nbsp;Pâte&nbsp;», «&nbsp;Garniture&nbsp;»…), chacune avec ses ingrédients et ses étapes, une photo par recette, catégories et tags, favoris.</li>
-      <li><strong>Recherche qui ignore les accents</strong>&nbsp;: «&nbsp;gateau&nbsp;» trouve «&nbsp;Gâteau au yaourt&nbsp;», en français comme en anglais.</li>
-      <li><strong>Portions ajustables</strong>&nbsp;: les quantités se recalculent selon le nombre de personnes, avec des unités harmonisées («&nbsp;CàS&nbsp;», «&nbsp;cuillère à soupe&nbsp;» et «&nbsp;tbsp&nbsp;» sont la même chose).</li>
-      <li><strong>Mode cuisine</strong>&nbsp;: une étape à la fois en plein écran, minuteurs automatiques par étape, et l'écran qui reste allumé (pour les mains pleines de farine).</li>
-      <li><strong>Planning des repas</strong>&nbsp;: déjeuner et dîner sur la semaine, recettes ou repas libres, notes, glisser-déposer, impression.</li>
-      <li><strong>Listes de courses intelligentes</strong>&nbsp;: ajout des ingrédients d'une recette (toutes les sections ou certaines), quantités additionnées quand un article revient, tri par rayon, «&nbsp;mode magasin&nbsp;» avec de grandes cases à cocher, et consultation <strong>hors ligne</strong> au fond du supermarché.</li>
-      <li><strong>Recettes bilingues</strong>&nbsp;: chaque recette existe dans sa langue d'origine et en traduction automatique&nbsp;; le site s'affiche dans la langue choisie.</li>
-      <li><strong>Installable sur téléphone</strong> (PWA), mode sombre, connexion par e-mail ou avec Google.</li>
+      <li><strong>Recettes en sections</strong> («&nbsp;Pâte&nbsp;», «&nbsp;Garniture&nbsp;»…), chacune avec ses ingrédients et ses étapes&nbsp;; photo, catégories, tags, favoris, impression.</li>
+      <li><strong>Recherche plein texte sans accents</strong>, en français comme en anglais, avec filtres et pagination.</li>
+      <li><strong>Portions ajustables</strong> avec arrondis lisibles (½, ¼, ⅓…) et <strong>37 unités normalisées</strong> reconnues sous 190 graphies.</li>
+      <li><strong>Mode cuisine</strong>&nbsp;: une étape à la fois en plein écran, navigation au clavier, écran maintenu allumé, <strong>minuteurs</strong> détectés automatiquement dans le texte des étapes, avec alarme sonore et vibration.</li>
+      <li><strong>Planning des repas</strong> de la semaine (déjeuner et dîner), recettes ou repas libres, notes, glisser-déposer, impression.</li>
+      <li><strong>Listes de courses</strong>&nbsp;: ajout d'une recette (sections choisies, nombre de portions), fusion automatique des articles identiques, tri par rayon, mode magasin, consultation hors ligne.</li>
+      <li><strong>Traducteur IA</strong>&nbsp;: une recette en texte, photo, PDF, Word, Google Docs ou dictée devient une recette structurée, en français et en anglais.</li>
+      <li><strong>Recettes bilingues</strong>, interface FR / EN, mode sombre, installable (PWA), connexion e-mail ou Google.</li>
     </ul>
 
-    <h3>Le traducteur IA</h3>
-    <p>La fonctionnalité phare pour alimenter le carnet&nbsp;: on donne une recette sous n'importe quelle forme, l'IA la transforme en recette structurée (sections, ingrédients, quantités dans les bonnes unités, étapes, catégorie), en français <em>et</em> en anglais, en un seul appel. On relit l'aperçu avant de l'ajouter.</p>
+    <div class="tech-title">Fiche technique</div>
+
+    <h3 id="rb-stack">Stack</h3>
+    <div class="tbl"><table>
+      <tr><th>Couche</th><th>Technologie</th></tr>
+      <tr><td>Runtime</td><td class="wrap-ok">Node 22</td></tr>
+      <tr><td>Framework</td><td class="wrap-ok">Nuxt 4.5 (rendu serveur), Vue 3.5, serveur Nitro</td></tr>
+      <tr><td>UI</td><td class="wrap-ok">Nuxt UI 4.11 (Tailwind CSS 4.3), Nuxt Fonts, Nuxt Icon (Lucide), Nuxt Image</td></tr>
+      <tr><td>État</td><td class="wrap-ok">Pinia 3</td></tr>
+      <tr><td>i18n</td><td class="wrap-ok">@nuxtjs/i18n 10 (FR par défaut, EN sous <code>/en</code>)</td></tr>
+      <tr><td>Données, comptes, fichiers</td><td class="wrap-ok">Supabase&nbsp;: PostgreSQL 17, Auth, Storage, via @nuxtjs/supabase 2 et supabase-js 2</td></tr>
+      <tr><td>Validation</td><td class="wrap-ok">Zod 3.25, schémas partagés navigateur / serveur</td></tr>
+      <tr><td>IA</td><td class="wrap-ok">Vercel AI SDK 7 avec OpenAI, Anthropic, Google et Mistral (OpenAI <code>gpt-4.1-mini</code> par défaut)</td></tr>
+      <tr><td>PWA</td><td class="wrap-ok">@vite-pwa/nuxt (Workbox)</td></tr>
+      <tr><td>Qualité</td><td class="wrap-ok">TypeScript strict, ESLint 9, Vitest 5, Playwright 1.63, GitHub Actions</td></tr>
+      <tr><td>Observabilité</td><td class="wrap-ok">Sentry (inactif sans configuration, aucune donnée personnelle)</td></tr>
+      <tr><td>Hébergement</td><td class="wrap-ok">Vercel</td></tr>
+    </table></div>
+
+    <h3 id="rb-archi">Architecture</h3>
+<pre><code>app/                   application Nuxt 4
+  components/          recipe/, editor/, planning/, shopping/, translator/, home/
+  composables/         recherche, fiche, planning, courses, traducteur, minuteurs…
+  pages/               recettes, planning, courses, favoris, traducteur
+  stores/              Pinia : auth, recettes, favoris, planning, courses
+shared/                code commun client / serveur
+  schemas/             schémas Zod (recette, courses, planning, IA, médias, unités…)
+  editions/            configurations des éditions (Boultons, générique)
+  utils/               quantités et portions, traductions, rayons, durées, contrastes
+server/
+  api/                 endpoints d'écriture
+  utils/               authentification, erreurs, validation, IA (fournisseurs, prompts, quotas, coûts)
+supabase/
+  migrations/          SQL versionné, idempotent, avec assertions
+  rollback/            retour arrière de chaque migration sensible
+  tests/               tests SQL par migration
+  local/               base de développement locale (Docker)
+e2e/, test/            Playwright, Vitest (unitaires et intégration)</code></pre>
     <div class="grid">
-      <div class="card"><h4>Toutes les sources</h4><p>Texte collé, photo d'une page de livre ou de cahier, PDF, document Word, Google Docs, import depuis Google Drive, ou dictée au micro.</p></div>
-      <div class="card"><h4>Détection des doublons</h4><p>Avant l'ajout, le site signale les recettes qui semblent déjà exister, pour éviter les doublons.</p></div>
-      <div class="card"><h4>Fournisseur interchangeable</h4><p>OpenAI par défaut, Anthropic, Google ou Mistral par simple configuration. Quota quotidien par personne et suivi du coût de chaque appel.</p></div>
-      <div class="card"><h4>Testable sans IA</h4><p>Un faux fournisseur déterministe permet de tester tout le parcours sans appel réseau ni coût.</p></div>
+      <div class="card"><h4>Lectures directes</h4><p>Les pages lisent la base directement via PostgREST, au rendu serveur comme dans le navigateur, sous Row Level Security. Pas d'endpoint intermédiaire pour lire.</p></div>
+      <div class="card"><h4>Écritures par l'API</h4><p>Chaque écriture passe par un endpoint Nitro&nbsp;: contrôle de session ou de rôle → validation Zod → requête ou fonction SQL sous RLS → gestion d'erreurs uniforme.</p></div>
+      <div class="card"><h4>Logique en base</h4><p>Enregistrement d'une recette entière, fusion des articles de courses, recherche et quotas IA sont des fonctions PostgreSQL transactionnelles, pas du code applicatif.</p></div>
+      <div class="card"><h4>Erreurs maîtrisées</h4><p>Les erreurs métier volontaires des fonctions SQL sont traduites en 400/403/404/409 avec un message clair&nbsp;; tout le reste devient un 500 générique, détaillé uniquement dans les journaux et Sentry.</p></div>
     </div>
 
-    <h3>En cours&nbsp;: la version 2</h3>
-    <p>Le site passe d'un carnet familial unique à une base multi-comptes&nbsp;: chacun son carnet, des <strong>groupes</strong> pour partager, des droits fins par recette (lire, copier, modifier) et une <strong>édition générique</strong> en plus de l'identité d'origine. La sécurité repose sur des politiques d'accès au niveau de la base de données (Row Level Security), préparées et testées migration par migration avant toute mise en production.</p>
+    <h3 id="rb-data">Modèle de données</h3>
+    <div class="tbl"><table>
+      <tr><th>Table</th><th>Contenu</th></tr>
+      <tr><td><code>recipes</code></td><td class="wrap-ok">titre, description, catégorie, temps, portions, photo, tags, langue d'origine, vecteur de recherche généré</td></tr>
+      <tr><td><code>recipe_sections</code></td><td class="wrap-ok">sections ordonnées (ingrédients, étapes ou mixte)</td></tr>
+      <tr><td><code>recipe_ingredients</code></td><td class="wrap-ok">quantité saisie + quantité numérique dérivée, unité saisie + code d'unité dérivé, optionnel</td></tr>
+      <tr><td><code>instructions</code></td><td class="wrap-ok">étapes ordonnées par section</td></tr>
+      <tr><td><code>recipe_translations</code></td><td class="wrap-ok">traduction dans l'autre langue, textes par position, empreinte de la source, statut «&nbsp;périmée&nbsp;»</td></tr>
+      <tr><td><code>units</code>, <code>unit_aliases</code></td><td class="wrap-ok">37 unités (libellés FR / EN, type, facteur de conversion) et 190 alias</td></tr>
+      <tr><td><code>favorites</code>, <code>planning</code>, <code>planning_notes</code></td><td class="wrap-ok">données personnelles de chaque compte</td></tr>
+      <tr><td><code>shopping_lists</code>, <code>shopping_items</code></td><td class="wrap-ok">listes et articles, avec quantité et unité normalisées</td></tr>
+      <tr><td><code>profiles</code></td><td class="wrap-ok">nom, rôle, langue, thème</td></tr>
+      <tr><td><code>ai_usage</code></td><td class="wrap-ok">journal de chaque appel IA&nbsp;: fournisseur, modèle, tokens, coût estimé, durée, statut</td></tr>
+    </table></div>
+    <h4>Fonctions SQL principales</h4>
+    <div class="tbl"><table>
+      <tr><th>Fonction</th><th>Rôle</th></tr>
+      <tr><td><code>save_recipe</code></td><td class="wrap-ok">crée ou remplace une recette complète (sections, ingrédients, étapes, photo, langue, traduction) en une seule transaction</td></tr>
+      <tr><td><code>search_recipes</code></td><td class="wrap-ok">recherche plein texte sans accents dans la langue d'origine et la traduction, filtres, pagination, total</td></tr>
+      <tr><td><code>merge_shopping_item</code></td><td class="wrap-ok">ajoute un article ou l'additionne à un article de même nom (replié) et même unité</td></tr>
+      <tr><td><code>add_recipe_to_list</code></td><td class="wrap-ok">ajoute les ingrédients d'une recette (sections choisies, facteur de portions, langue) avec fusion</td></tr>
+      <tr><td><code>parse_amount</code>, <code>normalize_unit</code></td><td class="wrap-ok">«&nbsp;1/2&nbsp;», «&nbsp;1,5&nbsp;», «&nbsp;2 à 3&nbsp;» → nombre&nbsp;; graphie libre → code d'unité (déclencheurs)</td></tr>
+      <tr><td><code>check_ai_quota</code></td><td class="wrap-ok">quota d'appels IA par personne et par jour (fuseau Europe/Paris)</td></tr>
+      <tr><td>hook Auth</td><td class="wrap-ok">ajoute le rôle de l'utilisateur dans le JWT, lu par les politiques RLS</td></tr>
+    </table></div>
+    <p>Les migrations sont versionnées, idempotentes, encadrées par une transaction, contiennent leurs propres assertions et ont un script de retour arrière. Historique&nbsp;: durcissement RLS, unités et quantités numériques, passage des recettes en sections, fonctions d'écriture et de recherche, rôle dans le JWT, photos, journal IA, nettoyage des données, recettes bilingues, puis les migrations de la v2.</p>
+
+    <h3 id="rb-sec">Sécurité</h3>
+    <ul>
+      <li><strong>Row Level Security sur toutes les tables</strong>&nbsp;: recettes en lecture pour tous et en écriture pour les administrateurs&nbsp;; favoris, planning et listes visibles et modifiables par leur seul propriétaire&nbsp;; journal IA en insertion seule.</li>
+      <li>Fonctions SQL en <code>SECURITY INVOKER</code> avec <code>search_path</code> figé&nbsp;; fonctions d'aide dans un schéma non exposé par l'API.</li>
+      <li>Côté serveur, l'identité vient toujours du jeton validé, jamais du corps de la requête&nbsp;; le rôle est vérifié avant chaque écriture d'administration.</li>
+      <li>Envois de fichiers&nbsp;: taille limitée côté client et serveur, format reconnu à l'en-tête des octets (jamais au type annoncé), archives Word décompressées sous plafond.</li>
+      <li>Session dans un cookie lu au rendu serveur&nbsp;; Sentry configuré pour n'envoyer ni utilisateur, ni cookies, ni en-têtes, ni paramètres d'URL.</li>
+    </ul>
+
+    <h3 id="rb-api">API (écritures)</h3>
+    <div class="tbl"><table>
+      <tr><th>Endpoint</th><th>Accès</th><th>Rôle</th></tr>
+      <tr><td><code>POST /api/add-recipe</code></td><td>admin</td><td class="wrap-ok">enregistre une recette et sa traduction</td></tr>
+      <tr><td><code>PUT /api/update-recipe</code></td><td>admin</td><td class="wrap-ok">remplace une recette, revalide ou régénère la traduction</td></tr>
+      <tr><td><code>DELETE /api/delete-recipe</code></td><td>admin</td><td class="wrap-ok">supprime une recette et ses photos</td></tr>
+      <tr><td><code>POST /api/translate-recipe</code></td><td>admin</td><td class="wrap-ok">texte → recette structurée bilingue (rien n'est enregistré)</td></tr>
+      <tr><td><code>POST /api/extract-recipe</code></td><td>admin</td><td class="wrap-ok">photos ou PDF (multipart) → recette structurée bilingue</td></tr>
+      <tr><td><code>POST /api/transcribe-recipe</code></td><td>admin</td><td class="wrap-ok">audio → texte à relire</td></tr>
+      <tr><td><code>POST /api/recipes/similar</code></td><td>admin</td><td class="wrap-ok">recettes proches (doublons), sans IA</td></tr>
+      <tr><td><code>/api/favorites</code></td><td>connecté</td><td class="wrap-ok">ajouter, retirer un favori</td></tr>
+      <tr><td><code>/api/planning</code>, <code>/api/planning-notes</code></td><td>connecté</td><td class="wrap-ok">ajouter, déplacer, supprimer un repas&nbsp;; notes par jour ou par repas</td></tr>
+      <tr><td><code>/api/shopping-lists</code></td><td>connecté</td><td class="wrap-ok">CRUD des listes, ajout d'une recette à une liste</td></tr>
+      <tr><td><code>/api/shopping-items</code></td><td>connecté</td><td class="wrap-ok">ajout avec fusion, modification, cochage, suppression</td></tr>
+    </table></div>
+
+    <h3 id="rb-ai">Traducteur IA</h3>
+    <ul>
+      <li><strong>Entrées</strong>&nbsp;: texte collé&nbsp;; <code>.txt</code>, <code>.md</code> et Word <code>.docx</code> lus <em>dans le navigateur</em> sans coût IA (le <code>.docx</code> est décompressé et son XML parcouru côté client)&nbsp;; photos et PDF envoyés au modèle (jusqu'à 4 fichiers)&nbsp;; dictée enregistrée dans le navigateur puis transcrite&nbsp;; import depuis Google Drive via Google Picker, avec un jeton de portée <code>drive.file</code> gardé en mémoire uniquement.</li>
+      <li><strong>Sortie structurée stricte</strong>&nbsp;: un seul appel renvoie la recette dans sa langue d'origine et sa traduction, avec la même structure (sections, ingrédients dans l'une des 37 unités, étapes, catégorie)&nbsp;; le résultat est revalidé par le schéma de l'éditeur.</li>
+      <li><strong>Photos réduites dans le navigateur</strong> (JPEG 2 000 px, ~900 Ko) pour tenir sous la limite de 4,5 Mo des fonctions Vercel.</li>
+      <li><strong>Détection des doublons</strong> par similarité du titre et des ingrédients avant l'ajout.</li>
+      <li><strong>Fournisseur interchangeable</strong> par configuration&nbsp;; modèle de transcription dédié pour la dictée.</li>
+      <li><strong>Garde-fous</strong>&nbsp;: quota par personne et par jour, journal de chaque appel avec coût estimé (grille de prix datée), délai de 25 s et un nouvel essai, erreurs du fournisseur traduites en messages sans détail technique.</li>
+      <li><strong>Fournisseur simulé</strong> déterministe pour les tests&nbsp;: recettes, transcriptions et traductions fixes, pannes simulables, aucun appel réseau.</li>
+    </ul>
+
+    <h3 id="rb-i18n">Recettes bilingues</h3>
+    <ul>
+      <li>Chaque recette garde son texte d'origine et une traduction dans l'autre langue, stockée <strong>par position</strong> (section n, ingrédient n, étape n)&nbsp;: comme l'enregistrement recrée les sous-éléments, une traduction par identifiant serait orpheline dès la première modification.</li>
+      <li>Une <strong>empreinte des textes sources</strong> permet de savoir si une modification touche vraiment le texte&nbsp;: sinon la traduction est revalidée sans appel IA.</li>
+      <li>Deux garde-fous évitent d'afficher une traduction fausse&nbsp;: elle est marquée périmée à chaque réécriture du texte, et n'est appliquée que si sa forme correspond encore à la recette.</li>
+      <li><strong>L'enregistrement ne dépend jamais de l'IA</strong>&nbsp;: en cas d'échec, la recette est enregistrée et s'affiche dans sa langue d'origine.</li>
+      <li>La recherche porte sur les deux langues, chacune avec son analyseur linguistique PostgreSQL&nbsp;; les unités s'affichent dans la langue de l'interface.</li>
+    </ul>
+
+    <h3 id="rb-pwa">PWA et hors ligne</h3>
+    <p>Service worker Workbox&nbsp;: précache des ressources, pages en <em>network first</em>, images et polices à la demande, aucune requête de données ni d'API mise en cache. Les listes de courses sont copiées localement et restent lisibles sans réseau, avec un bandeau hors ligne&nbsp;; tout est effacé à la déconnexion.</p>
+
+    <h3 id="rb-editions">Éditions</h3>
+    <p>Le même code sert deux identités, choisies par configuration&nbsp;: «&nbsp;Recettes des Boultons&nbsp;» (identité d'origine, illustrations de catégories) et une édition générique (palette terracotta, icônes). Chaque édition définit nom, accroche, palette complète, accueil, illustrations et règles d'affichage des cartes&nbsp;; le thème est injecté dès le rendu serveur, sans flash. Les contrastes AA de chaque palette sont vérifiés par les tests. Cette configuration préfigure celle d'un groupe en v2.</p>
+
+    <h3 id="rb-tests">Tests et CI</h3>
+    <div class="tbl"><table>
+      <tr><th>Niveau</th><th>Couverture</th></tr>
+      <tr><td>Unitaires (Vitest)</td><td class="wrap-ok">schémas, portions, unités, courses, semaines, durées et minuteurs, i18n (parité FR / EN), IA (simulation, erreurs, prix, médias), éditions et contrastes</td></tr>
+      <tr><td>Intégration</td><td class="wrap-ok">contre une base Supabase locale et un serveur avec IA simulée&nbsp;: traduction, médias, doublons, recettes bilingues</td></tr>
+      <tr><td>Bout en bout (Playwright)</td><td class="wrap-ok">bureau et mobile&nbsp;: recherche, favoris, courses, planning, rôles, hors ligne, traducteur (fichiers, photo, PDF, dictée avec micro simulé, Google Drive simulé), minuteurs, modales, éditions</td></tr>
+      <tr><td>SQL</td><td class="wrap-ok">chaque migration appliquée, rejouée, retirée puis réappliquée, avec ses tests</td></tr>
+      <tr><td>CI GitHub Actions</td><td class="wrap-ok">lint, typecheck, tests, build, puis e2e sur une stack Supabase démarrée dans la CI</td></tr>
+    </table></div>
+    <p>Développement contre une base locale (Docker) avec comptes de test, jamais contre la production. Déploiement continu sur Vercel&nbsp;; migrations appliquées séparément selon une procédure écrite pas à pas.</p>
+
+    <h3 id="rb-v2">En cours&nbsp;: la version 2</h3>
+    <p>Passage d'un carnet familial unique à une application multi-comptes, préparé par migrations successives sans effet sur le site actuel jusqu'à la bascule&nbsp;:</p>
+    <ul>
+      <li><strong>Schéma social</strong>&nbsp;: catégories personnelles, groupes et membres, amis, invitations (y compris par lien), droits par recette, liens de partage, carnet personnel, notifications, signalements.</li>
+      <li><strong>Droits gradués par recette</strong>&nbsp;: auteur (tout), modification du contenu, lecture et copie, lecture seule&nbsp;; visibilité privée ou partagée avec ses groupes&nbsp;; repartage plafonné.</li>
+      <li><strong>Politiques RLS</strong> s'appuyant sur des fonctions d'aide (peut lire, copier, modifier…), recherche d'utilisateurs qui n'expose jamais l'e-mail, limites de débit, export des données et suppression de compte.</li>
+      <li><strong>Bascule outillée</strong>&nbsp;: remplissage des données idempotent avec sauvegarde, changement des politiques refusé tant que les données ne sont pas prêtes, retour arrière prévu à chaque étape.</li>
+    </ul>
 
     <h3>Technologies</h3>
     <div class="stack">
-      <span>TypeScript strict</span><span>Nuxt 4</span><span>Vue 3</span><span>Nuxt UI</span><span>Tailwind CSS 4</span><span>Pinia</span><span>i18n</span><span>Supabase (PostgreSQL 17, Auth, Storage)</span><span>Row Level Security</span><span>Zod</span><span>Vercel AI SDK</span><span>PWA / Workbox</span><span>Vitest</span><span>Playwright</span><span>GitHub Actions</span><span>Sentry</span><span>Vercel</span>
+      <span>TypeScript strict</span><span>Nuxt 4</span><span>Vue 3</span><span>Nitro</span><span>Nuxt UI</span><span>Tailwind CSS 4</span><span>Pinia</span><span>i18n</span><span>Supabase</span><span>PostgreSQL 17</span><span>Row Level Security</span><span>Zod</span><span>Vercel AI SDK</span><span>OpenAI / Anthropic / Google / Mistral</span><span>Google Picker</span><span>PWA / Workbox</span><span>Vitest</span><span>Playwright</span><span>GitHub Actions</span><span>Sentry</span><span>Vercel</span>
     </div>
 
     <div class="facts">
       <div class="fact"><b>Juin 2025</b><small>début du projet</small></div>
       <div class="fact"><b>~180</b><small>recettes de famille</small></div>
       <div class="fact"><b>200+</b><small>commits</small></div>
-      <div class="fact"><b>Tests</b><small>unitaires, intégration, e2e, SQL</small></div>
+      <div class="fact"><b>4 niveaux</b><small>de tests&nbsp;: unitaires, intégration, e2e, SQL</small></div>
     </div>
   </div>
 </section>
 
-<!-- ============ TRAINING LOG ============ -->
+<!-- ======================================================= -->
+<!-- TRAINING LOG                                             -->
+<!-- ======================================================= -->
 <section class="project run" id="training">
   <div class="p-head">
     <div class="p-kicker">Application web · course à pied & vélo · Strava</div>
@@ -235,34 +495,78 @@ footer { padding: 24px 0 56px; color: var(--muted); font-size: .9rem; }
       <span class="btn ghost">Pas encore en ligne</span>
       <span class="btn ghost">Dépôt GitHub privé</span>
     </div>
+    <nav class="sub-nav" aria-label="Training Log">
+      <a href="#tl-stack">Stack</a><a href="#tl-archi">Architecture</a><a href="#tl-api">API</a><a href="#tl-data">Stockage</a><a href="#tl-next">Feuille de route</a>
+    </nav>
   </div>
   <div class="p-body">
     <h3>Le problème</h3>
     <p>Je tenais un tableur pour la course et un autre pour le vélo&nbsp;: kilomètres, types de séance, défis, notes. Strava a toutes les données mais pas la vue par objectif ni le journal annoté que je voulais. Training Log combine les deux&nbsp;: les données de Strava, et ma couche à moi par-dessus. Outil personnel d'abord, il a vocation à devenir une vraie application d'entraînement, indépendante de BikeCheck.</p>
 
-    <h3>Ce que fait l'application</h3>
+    <h3>Fonctionnalités</h3>
     <ul>
-      <li><strong>Objectifs par sport</strong>&nbsp;: kilomètres de la saison, barre de progression avec un repère «&nbsp;rythme régulier&nbsp;», avance ou retard, km par semaine encore nécessaires, courbe cumulée, temps, dénivelé, allure moyenne (course) ou vitesse (vélo). Objectifs modifiables, par année.</li>
-      <li><strong>Mois par mois</strong>&nbsp;: course et vélo côte à côte, au choix en temps, distance, dénivelé, effort relatif ou nombre de séances&nbsp;; le survol détaille la répartition par type de séance, le clic saute au mois dans le journal.</li>
-      <li><strong>Semaine par semaine</strong>&nbsp;: heures hebdomadaires des deux sports et corrélation entre les deux (courir plus fait-il rouler moins&nbsp;?).</li>
-      <li><strong>Journal éditable</strong> façon tableur&nbsp;: onglets course / vélo / tout, groupé par mois et par semaine avec totaux. Chaque cellule se modifie&nbsp;; une valeur modifiée remplace celle de Strava (et le signale), effacer la cellule rétablit Strava. Ajout de séances à la main, masquage, recherche.</li>
+      <li><strong>Objectifs par sport</strong>&nbsp;: km de la saison, progression avec repère «&nbsp;rythme régulier&nbsp;», avance ou retard, km par semaine encore nécessaires, courbe cumulée, temps, dénivelé, allure moyenne (course) ou vitesse (vélo). Objectifs modifiables, par année.</li>
+      <li><strong>Mois par mois</strong>&nbsp;: course et vélo côte à côte, en temps, distance, dénivelé, effort relatif ou nombre de séances&nbsp;; le survol détaille la répartition par type de séance, le clic saute au mois dans le journal.</li>
+      <li><strong>Semaine par semaine</strong>&nbsp;: heures hebdomadaires des deux sports et corrélation de Pearson entre les deux (courir plus fait-il rouler moins&nbsp;?).</li>
+      <li><strong>Journal éditable</strong> façon tableur&nbsp;: onglets course / vélo / tout, regroupement par mois et par semaine ISO avec totaux. Chaque cellule se modifie&nbsp;; une valeur modifiée remplace celle de Strava (et le signale), effacer la cellule rétablit Strava. Séances ajoutées à la main, masquage et restauration, recherche, tri.</li>
       <li><strong>Colonnes personnalisables</strong>&nbsp;: afficher, renommer, réordonner, ajouter des colonnes (texte, nombre, liste de choix) pour la course, le vélo ou les deux.</li>
-      <li><strong>Types de séance colorés</strong> (footing, tempo, fractionné, sortie longue, côtes, trail, course&nbsp;; route, gravel, VTT, home-trainer…), devinés à partir de Strava puis confirmés à la main.</li>
-      <li>Thème clair et sombre, mise en page téléphone, icône d'écran d'accueil, accès protégé.</li>
+      <li><strong>Types de séance colorés</strong> (footing, tempo, fractionné, sortie longue, côtes, trail, course&nbsp;; route, home-trainer, gravel, VTT…), devinés à partir de Strava et affichés en pointillés tant qu'ils ne sont pas confirmés.</li>
+      <li>Écran de connexion, thèmes clair et sombre, mise en page téléphone, icône d'écran d'accueil.</li>
     </ul>
 
-    <h3>Sous le capot</h3>
-    <p>Volontairement minimaliste&nbsp;: une seule page en JavaScript sans framework avec Chart.js, et une fonction serveur Python sur Vercel qui gère la connexion Strava (OAuth), la synchronisation d'une saison entière en quelques requêtes, et l'enregistrement des modifications dans PostgreSQL. Session signée, verrouillage après plusieurs mots de passe erronés, en-têtes de sécurité.</p>
+    <div class="tech-title">Fiche technique</div>
+
+    <h3 id="tl-stack">Stack</h3>
+    <div class="tbl"><table>
+      <tr><th>Couche</th><th>Choix</th></tr>
+      <tr><td>Front-end</td><td class="wrap-ok">une page HTML, JavaScript sans framework, Chart.js 4</td></tr>
+      <tr><td>Serveur</td><td class="wrap-ok">fonction serverless Python sur Vercel (bibliothèque standard + <code>pg8000</code>)</td></tr>
+      <tr><td>Base de données</td><td class="wrap-ok">PostgreSQL, rôle dédié limité à son schéma</td></tr>
+      <tr><td>Données</td><td class="wrap-ok">API Strava (OAuth 2)</td></tr>
+      <tr><td>Installation</td><td class="wrap-ok">manifeste web et icônes pour l'écran d'accueil</td></tr>
+    </table></div>
+
+    <h3 id="tl-archi">Architecture</h3>
+<pre><code>index.html             tout le front-end : graphiques, objectifs, journal éditable
+api/index.py           le serveur : connexion, OAuth Strava, synchro, enregistrement
+vercel.json            réécritures /api/* et /auth/* vers la fonction, en-têtes de sécurité
+manifest.webmanifest   installation sur l'écran d'accueil</code></pre>
+    <p>Un choix volontairement minimaliste&nbsp;: aucune étape de build, aucune dépendance front-end hors Chart.js, un seul fichier serveur. Les couleurs sont des variables CSS avec variantes sombres, partagées entre graphiques et étiquettes de types de séance.</p>
+
+    <h3 id="tl-api">API</h3>
+    <div class="tbl"><table>
+      <tr><th>Route</th><th>Rôle</th></tr>
+      <tr><td><code>GET /api/state?year=</code></td><td class="wrap-ok">statut Strava, journal enregistré (modifications, séances manuelles, réglages) et activités en cache pour l'année</td></tr>
+      <tr><td><code>POST /api/sync</code></td><td class="wrap-ok">télécharge une année depuis Strava (200 activités par page) et la met en cache</td></tr>
+      <tr><td><code>POST /api/store</code></td><td class="wrap-ok">enregistre un document&nbsp;: modification d'une activité, séance manuelle, colonnes, objectifs</td></tr>
+      <tr><td><code>POST /api/login</code>, <code>/logout</code>, <code>/disconnect</code></td><td class="wrap-ok">connexion à l'application, déconnexion, déconnexion de Strava</td></tr>
+      <tr><td><code>GET /auth/start</code>, <code>/auth/callback</code></td><td class="wrap-ok">OAuth Strava, état vérifié par cookie</td></tr>
+    </table></div>
+    <ul>
+      <li>La liste des activités Strava contient déjà fréquence cardiaque, puissance, effort relatif et type de séance&nbsp;: aucune requête par activité, une saison entière se synchronise en quelques appels.</li>
+      <li>Session par cookie signé HMAC, verrouillage temporaire après plusieurs mots de passe erronés, en-têtes <code>X-Frame-Options</code>, <code>Referrer-Policy</code>, <code>X-Content-Type-Options</code>.</li>
+    </ul>
+
+    <h3 id="tl-data">Stockage</h3>
+    <p>Une seule table de documents JSON <code>(collection, id, data jsonb)</code>&nbsp;: modifications par activité Strava, séances manuelles, réglages (colonnes, objectifs), jetons Strava et activités en cache par année. Les valeurs modifiées à la main se superposent aux données Strava sans jamais les écraser.</p>
+
+    <h3 id="tl-next">Feuille de route</h3>
+    <ul>
+      <li>Base de données propre au projet (Postgres serverless), séparée de BikeCheck.</li>
+      <li>Mise en ligne sur Vercel, puis nom de domaine dédié.</li>
+      <li>Import des notes, défis et types de séance des anciens tableurs, rapprochés par date.</li>
+      <li>À terme&nbsp;: application Strava dédiée et passage en multi-utilisateurs.</li>
+    </ul>
 
     <h3>Technologies</h3>
     <div class="stack">
-      <span>HTML / CSS / JavaScript</span><span>Chart.js</span><span>Python</span><span>Fonctions serverless Vercel</span><span>PostgreSQL</span><span>API Strava (OAuth)</span><span>PWA</span>
+      <span>HTML / CSS / JavaScript</span><span>Chart.js</span><span>Python</span><span>Vercel Functions</span><span>PostgreSQL</span><span>API Strava (OAuth)</span><span>PWA</span>
     </div>
 
     <div class="facts">
       <div class="fact"><b>Octobre 2026</b><small>début du projet</small></div>
       <div class="fact"><b>2</b><small>tableurs remplacés</small></div>
-      <div class="fact"><b>0</b><small>framework front</small></div>
+      <div class="fact"><b>0</b><small>étape de build</small></div>
     </div>
   </div>
 </section>
