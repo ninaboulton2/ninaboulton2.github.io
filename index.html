@@ -153,7 +153,7 @@ footer { padding: 24px 0 56px; color: var(--muted); font-size: .9rem; }
       <span class="btn ghost">Dépôt GitHub privé</span>
     </div>
     <nav class="sub-nav" aria-label="BikeCheck">
-      <a href="#bc-stack">Stack</a><a href="#bc-archi">Architecture</a><a href="#bc-wear">Calcul de l'usure</a><a href="#bc-strava">Strava</a><a href="#bc-notif">Alertes et tâches planifiées</a><a href="#bc-api">API</a><a href="#bc-db">Base de données</a><a href="#bc-qa">Qualité</a>
+      <a href="#bc-stack">Stack</a><a href="#bc-wear">Calcul de l'usure</a><a href="#bc-strava">Strava</a><a href="#bc-notif">Alertes et tâches planifiées</a><a href="#bc-db">Base de données</a><a href="#bc-qa">Qualité</a>
     </nav>
   </div>
   <div class="p-body">
@@ -193,20 +193,6 @@ footer { padding: 24px 0 56px; color: var(--muted); font-size: .9rem; }
       <tr><td>Observabilité</td><td class="wrap-ok">Sentry (données personnelles filtrées)</td></tr>
     </table></div>
 
-    <h3 id="bc-archi">Architecture</h3>
-<pre><code>apps/web/                 application Next.js
-  (marketing)/            accueil, guide public, contact, mentions légales, confidentialité
-  (app)/                  pages connectées : tableau de bord, vélos, pièces, sorties,
-                          entretien, rappels, réglages, onboarding, « comment ça marche »
-  api/                    route handlers (voir API)
-  lib/server/             logique serveur : usure, synchro Strava, alertes, rappels, e-mails
-packages/core/            logique pure : moteur d'usure, rappels, impact économique,
-                          client Strava, limites de débit, mesures de chaîne, coûts
-packages/db/              schéma Drizzle, migrations SQL, scripts de maintenance
-packages/shared/          enums, schémas Zod, constantes, préréglages, i18n (en, fr)
-packages/email/           modèles React Email et envoi Resend</code></pre>
-    <p>Toute la logique métier sensible (usure, rappels, coûts, quotas Strava) vit dans <code>packages/core</code> sous forme de fonctions pures, testées indépendamment de Next.js. Toutes les constantes (coefficients, matrice home-trainer, seuils d'alerte, modèles de vélos) sont centralisées dans <code>packages/shared</code>. Chaque requête sur des données utilisateur est restreinte à l'utilisateur de la session, y compris pour les identifiants reçus dans le corps des requêtes.</p>
-
     <h3 id="bc-wear">Calcul de l'usure</h3>
     <p>Les sorties (<code>ride_logs</code>) sont l'<strong>unique source de vérité</strong>&nbsp;: les kilomètres et heures d'une pièce sont toujours <em>dérivés</em> des sorties, jamais incrémentés par une route.</p>
     <div class="grid">
@@ -245,19 +231,6 @@ packages/email/           modèles React Email et envoi Resend</code></pre>
       <tr><td>Sauvegarde</td><td>chaque nuit</td><td class="wrap-ok"><code>pg_dump</code> chiffré, procédure de restauration testée</td></tr>
     </table></div>
     <p>Toutes les routes de tâches planifiées sont protégées par un secret partagé.</p>
-
-    <h3 id="bc-api">API</h3>
-    <p>Une trentaine de route handlers. Toutes, sauf l'authentification, le contact, les crons et les webhooks, exigent une session et sont restreintes à l'utilisateur.</p>
-    <div class="tbl"><table>
-      <tr><th>Domaine</th><th>Routes</th></tr>
-      <tr><td>Authentification</td><td class="wrap-ok">redirection et callback OAuth Strava, utilisateur courant, suppression de compte, déconnexion</td></tr>
-      <tr><td>Vélos</td><td class="wrap-ok">liste, création, import depuis Strava, lecture, modification, suppression douce, recalcul</td></tr>
-      <tr><td>Pièces</td><td class="wrap-ok">CRUD, détail sortie par sortie, remplacement, entretien fait, batterie chargée</td></tr>
-      <tr><td>Sorties</td><td class="wrap-ok">liste, ajout manuel, modification (conditions), suppression</td></tr>
-      <tr><td>Entretien et rappels</td><td class="wrap-ok">historique d'entretien, rappels (création, report, pause, fait)</td></tr>
-      <tr><td>Divers</td><td class="wrap-ok">tableau de bord agrégé, réglages, synchro et statut, contact</td></tr>
-      <tr><td>Système</td><td class="wrap-ok">crons (contrôle quotidien, récap, revérifications), webhook Strava</td></tr>
-    </table></div>
 
     <h3 id="bc-db">Base de données</h3>
     <p>Schéma Drizzle, migrations SQL écrites à la main et appliquées une à une après relecture (le README tient le registre de ce qui est en production). Principales tables&nbsp;: utilisateurs, vélos, pièces (avec le cache d'usure), sorties, événements d'entretien, mesures de pièces, rappels, abonnements push, messages de contact, file des événements Strava en attente. Les tables sont masquées des API publiques de Supabase&nbsp;: seul le serveur y accède.</p>
@@ -307,7 +280,7 @@ packages/email/           modèles React Email et envoi Resend</code></pre>
       <span class="btn ghost">Dépôt GitHub privé</span>
     </div>
     <nav class="sub-nav" aria-label="Recettes des Boultons">
-      <a href="#rb-stack">Stack</a><a href="#rb-archi">Architecture</a><a href="#rb-data">Modèle de données</a><a href="#rb-sec">Sécurité</a><a href="#rb-api">API</a><a href="#rb-ai">Traducteur IA</a><a href="#rb-i18n">Recettes bilingues</a><a href="#rb-pwa">PWA</a><a href="#rb-editions">Éditions</a><a href="#rb-tests">Tests et CI</a><a href="#rb-v2">v2</a>
+      <a href="#rb-stack">Stack</a><a href="#rb-ai">Traducteur IA</a><a href="#rb-i18n">Recettes bilingues</a><a href="#rb-pwa">PWA</a><a href="#rb-editions">Éditions</a><a href="#rb-tests">Tests et CI</a><a href="#rb-v2">v2</a>
     </nav>
   </div>
   <div class="p-body">
@@ -343,84 +316,6 @@ packages/email/           modèles React Email et envoi Resend</code></pre>
       <tr><td>Qualité</td><td class="wrap-ok">TypeScript strict, ESLint 9, Vitest 5, Playwright 1.63, GitHub Actions</td></tr>
       <tr><td>Observabilité</td><td class="wrap-ok">Sentry (inactif sans configuration, aucune donnée personnelle)</td></tr>
       <tr><td>Hébergement</td><td class="wrap-ok">Vercel</td></tr>
-    </table></div>
-
-    <h3 id="rb-archi">Architecture</h3>
-<pre><code>app/                   application Nuxt 4
-  components/          recipe/, editor/, planning/, shopping/, translator/, home/
-  composables/         recherche, fiche, planning, courses, traducteur, minuteurs…
-  pages/               recettes, planning, courses, favoris, traducteur
-  stores/              Pinia : auth, recettes, favoris, planning, courses
-shared/                code commun client / serveur
-  schemas/             schémas Zod (recette, courses, planning, IA, médias, unités…)
-  editions/            configurations des éditions (Boultons, générique)
-  utils/               quantités et portions, traductions, rayons, durées, contrastes
-server/
-  api/                 endpoints d'écriture
-  utils/               authentification, erreurs, validation, IA (fournisseurs, prompts, quotas, coûts)
-supabase/
-  migrations/          SQL versionné, idempotent, avec assertions
-  rollback/            retour arrière de chaque migration sensible
-  tests/               tests SQL par migration
-  local/               base de développement locale (Docker)
-e2e/, test/            Playwright, Vitest (unitaires et intégration)</code></pre>
-    <div class="grid">
-      <div class="card"><h4>Lectures directes</h4><p>Les pages lisent la base directement via PostgREST, au rendu serveur comme dans le navigateur, sous Row Level Security. Pas d'endpoint intermédiaire pour lire.</p></div>
-      <div class="card"><h4>Écritures par l'API</h4><p>Chaque écriture passe par un endpoint Nitro&nbsp;: contrôle de session ou de rôle → validation Zod → requête ou fonction SQL sous RLS → gestion d'erreurs uniforme.</p></div>
-      <div class="card"><h4>Logique en base</h4><p>Enregistrement d'une recette entière, fusion des articles de courses, recherche et quotas IA sont des fonctions PostgreSQL transactionnelles, pas du code applicatif.</p></div>
-      <div class="card"><h4>Erreurs maîtrisées</h4><p>Les erreurs métier volontaires des fonctions SQL sont traduites en 400/403/404/409 avec un message clair&nbsp;; tout le reste devient un 500 générique, détaillé uniquement dans les journaux et Sentry.</p></div>
-    </div>
-
-    <h3 id="rb-data">Modèle de données</h3>
-    <div class="tbl"><table>
-      <tr><th>Table</th><th>Contenu</th></tr>
-      <tr><td><code>recipes</code></td><td class="wrap-ok">titre, description, catégorie, temps, portions, photo, tags, langue d'origine, vecteur de recherche généré</td></tr>
-      <tr><td><code>recipe_sections</code></td><td class="wrap-ok">sections ordonnées (ingrédients, étapes ou mixte)</td></tr>
-      <tr><td><code>recipe_ingredients</code></td><td class="wrap-ok">quantité saisie + quantité numérique dérivée, unité saisie + code d'unité dérivé, optionnel</td></tr>
-      <tr><td><code>instructions</code></td><td class="wrap-ok">étapes ordonnées par section</td></tr>
-      <tr><td><code>recipe_translations</code></td><td class="wrap-ok">traduction dans l'autre langue, textes par position, empreinte de la source, statut «&nbsp;périmée&nbsp;»</td></tr>
-      <tr><td><code>units</code>, <code>unit_aliases</code></td><td class="wrap-ok">37 unités (libellés FR / EN, type, facteur de conversion) et 190 alias</td></tr>
-      <tr><td><code>favorites</code>, <code>planning</code>, <code>planning_notes</code></td><td class="wrap-ok">données personnelles de chaque compte</td></tr>
-      <tr><td><code>shopping_lists</code>, <code>shopping_items</code></td><td class="wrap-ok">listes et articles, avec quantité et unité normalisées</td></tr>
-      <tr><td><code>profiles</code></td><td class="wrap-ok">nom, rôle, langue, thème</td></tr>
-      <tr><td><code>ai_usage</code></td><td class="wrap-ok">journal de chaque appel IA&nbsp;: fournisseur, modèle, tokens, coût estimé, durée, statut</td></tr>
-    </table></div>
-    <h4>Fonctions SQL principales</h4>
-    <div class="tbl"><table>
-      <tr><th>Fonction</th><th>Rôle</th></tr>
-      <tr><td><code>save_recipe</code></td><td class="wrap-ok">crée ou remplace une recette complète (sections, ingrédients, étapes, photo, langue, traduction) en une seule transaction</td></tr>
-      <tr><td><code>search_recipes</code></td><td class="wrap-ok">recherche plein texte sans accents dans la langue d'origine et la traduction, filtres, pagination, total</td></tr>
-      <tr><td><code>merge_shopping_item</code></td><td class="wrap-ok">ajoute un article ou l'additionne à un article de même nom (replié) et même unité</td></tr>
-      <tr><td><code>add_recipe_to_list</code></td><td class="wrap-ok">ajoute les ingrédients d'une recette (sections choisies, facteur de portions, langue) avec fusion</td></tr>
-      <tr><td><code>parse_amount</code>, <code>normalize_unit</code></td><td class="wrap-ok">«&nbsp;1/2&nbsp;», «&nbsp;1,5&nbsp;», «&nbsp;2 à 3&nbsp;» → nombre&nbsp;; graphie libre → code d'unité (déclencheurs)</td></tr>
-      <tr><td><code>check_ai_quota</code></td><td class="wrap-ok">quota d'appels IA par personne et par jour (fuseau Europe/Paris)</td></tr>
-      <tr><td>hook Auth</td><td class="wrap-ok">ajoute le rôle de l'utilisateur dans le JWT, lu par les politiques RLS</td></tr>
-    </table></div>
-    <p>Les migrations sont versionnées, idempotentes, encadrées par une transaction, contiennent leurs propres assertions et ont un script de retour arrière. Historique&nbsp;: durcissement RLS, unités et quantités numériques, passage des recettes en sections, fonctions d'écriture et de recherche, rôle dans le JWT, photos, journal IA, nettoyage des données, recettes bilingues, puis les migrations de la v2.</p>
-
-    <h3 id="rb-sec">Sécurité</h3>
-    <ul>
-      <li><strong>Row Level Security sur toutes les tables</strong>&nbsp;: recettes en lecture pour tous et en écriture pour les administrateurs&nbsp;; favoris, planning et listes visibles et modifiables par leur seul propriétaire&nbsp;; journal IA en insertion seule.</li>
-      <li>Fonctions SQL en <code>SECURITY INVOKER</code> avec <code>search_path</code> figé&nbsp;; fonctions d'aide dans un schéma non exposé par l'API.</li>
-      <li>Côté serveur, l'identité vient toujours du jeton validé, jamais du corps de la requête&nbsp;; le rôle est vérifié avant chaque écriture d'administration.</li>
-      <li>Envois de fichiers&nbsp;: taille limitée côté client et serveur, format reconnu à l'en-tête des octets (jamais au type annoncé), archives Word décompressées sous plafond.</li>
-      <li>Session dans un cookie lu au rendu serveur&nbsp;; Sentry configuré pour n'envoyer ni utilisateur, ni cookies, ni en-têtes, ni paramètres d'URL.</li>
-    </ul>
-
-    <h3 id="rb-api">API (écritures)</h3>
-    <div class="tbl"><table>
-      <tr><th>Endpoint</th><th>Accès</th><th>Rôle</th></tr>
-      <tr><td><code>POST /api/add-recipe</code></td><td>admin</td><td class="wrap-ok">enregistre une recette et sa traduction</td></tr>
-      <tr><td><code>PUT /api/update-recipe</code></td><td>admin</td><td class="wrap-ok">remplace une recette, revalide ou régénère la traduction</td></tr>
-      <tr><td><code>DELETE /api/delete-recipe</code></td><td>admin</td><td class="wrap-ok">supprime une recette et ses photos</td></tr>
-      <tr><td><code>POST /api/translate-recipe</code></td><td>admin</td><td class="wrap-ok">texte → recette structurée bilingue (rien n'est enregistré)</td></tr>
-      <tr><td><code>POST /api/extract-recipe</code></td><td>admin</td><td class="wrap-ok">photos ou PDF (multipart) → recette structurée bilingue</td></tr>
-      <tr><td><code>POST /api/transcribe-recipe</code></td><td>admin</td><td class="wrap-ok">audio → texte à relire</td></tr>
-      <tr><td><code>POST /api/recipes/similar</code></td><td>admin</td><td class="wrap-ok">recettes proches (doublons), sans IA</td></tr>
-      <tr><td><code>/api/favorites</code></td><td>connecté</td><td class="wrap-ok">ajouter, retirer un favori</td></tr>
-      <tr><td><code>/api/planning</code>, <code>/api/planning-notes</code></td><td>connecté</td><td class="wrap-ok">ajouter, déplacer, supprimer un repas&nbsp;; notes par jour ou par repas</td></tr>
-      <tr><td><code>/api/shopping-lists</code></td><td>connecté</td><td class="wrap-ok">CRUD des listes, ajout d'une recette à une liste</td></tr>
-      <tr><td><code>/api/shopping-items</code></td><td>connecté</td><td class="wrap-ok">ajout avec fusion, modification, cochage, suppression</td></tr>
     </table></div>
 
     <h3 id="rb-ai">Traducteur IA</h3>
@@ -496,7 +391,7 @@ e2e/, test/            Playwright, Vitest (unitaires et intégration)</code></pr
       <span class="btn ghost">Dépôt GitHub privé</span>
     </div>
     <nav class="sub-nav" aria-label="Training Log">
-      <a href="#tl-stack">Stack</a><a href="#tl-archi">Architecture</a><a href="#tl-api">API</a><a href="#tl-data">Stockage</a><a href="#tl-next">Feuille de route</a>
+      <a href="#tl-stack">Stack</a><a href="#tl-data">Stockage</a><a href="#tl-next">Feuille de route</a>
     </nav>
   </div>
   <div class="p-body">
@@ -525,27 +420,6 @@ e2e/, test/            Playwright, Vitest (unitaires et intégration)</code></pr
       <tr><td>Données</td><td class="wrap-ok">API Strava (OAuth 2)</td></tr>
       <tr><td>Installation</td><td class="wrap-ok">manifeste web et icônes pour l'écran d'accueil</td></tr>
     </table></div>
-
-    <h3 id="tl-archi">Architecture</h3>
-<pre><code>index.html             tout le front-end : graphiques, objectifs, journal éditable
-api/index.py           le serveur : connexion, OAuth Strava, synchro, enregistrement
-vercel.json            réécritures /api/* et /auth/* vers la fonction, en-têtes de sécurité
-manifest.webmanifest   installation sur l'écran d'accueil</code></pre>
-    <p>Un choix volontairement minimaliste&nbsp;: aucune étape de build, aucune dépendance front-end hors Chart.js, un seul fichier serveur. Les couleurs sont des variables CSS avec variantes sombres, partagées entre graphiques et étiquettes de types de séance.</p>
-
-    <h3 id="tl-api">API</h3>
-    <div class="tbl"><table>
-      <tr><th>Route</th><th>Rôle</th></tr>
-      <tr><td><code>GET /api/state?year=</code></td><td class="wrap-ok">statut Strava, journal enregistré (modifications, séances manuelles, réglages) et activités en cache pour l'année</td></tr>
-      <tr><td><code>POST /api/sync</code></td><td class="wrap-ok">télécharge une année depuis Strava (200 activités par page) et la met en cache</td></tr>
-      <tr><td><code>POST /api/store</code></td><td class="wrap-ok">enregistre un document&nbsp;: modification d'une activité, séance manuelle, colonnes, objectifs</td></tr>
-      <tr><td><code>POST /api/login</code>, <code>/logout</code>, <code>/disconnect</code></td><td class="wrap-ok">connexion à l'application, déconnexion, déconnexion de Strava</td></tr>
-      <tr><td><code>GET /auth/start</code>, <code>/auth/callback</code></td><td class="wrap-ok">OAuth Strava, état vérifié par cookie</td></tr>
-    </table></div>
-    <ul>
-      <li>La liste des activités Strava contient déjà fréquence cardiaque, puissance, effort relatif et type de séance&nbsp;: aucune requête par activité, une saison entière se synchronise en quelques appels.</li>
-      <li>Session par cookie signé HMAC, verrouillage temporaire après plusieurs mots de passe erronés, en-têtes <code>X-Frame-Options</code>, <code>Referrer-Policy</code>, <code>X-Content-Type-Options</code>.</li>
-    </ul>
 
     <h3 id="tl-data">Stockage</h3>
     <p>Une seule table de documents JSON <code>(collection, id, data jsonb)</code>&nbsp;: modifications par activité Strava, séances manuelles, réglages (colonnes, objectifs), jetons Strava et activités en cache par année. Les valeurs modifiées à la main se superposent aux données Strava sans jamais les écraser.</p>
